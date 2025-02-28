@@ -14,11 +14,11 @@ Linux namespaces are a crucial feature for process isolation and resource manage
 They allow the creation of **separate environments within a single Linux system**, each with its own view of system resources.  
 
 There are 7 types of namespaces in Linux, each isolating different aspects of the system:
+- **UTS** namespace: Isolates hostname and domain name
+- **IPC** namespace: Isolates interprocess communication resources
 - **PID** namespace: Isolates process IDs
 - **NET** namespace: Isolates network interfaces
 - **MNT** namespace: Isolates filesystem mount points
-- **UTS** namespace: Isolates hostname and domain name
-- **IPC** namespace: Isolates interprocess communication resources
 - **USER** namespace: Isolates user and group IDs
 - **CGROUP** namespace: Isolates the virtual cgroup filesystem
 
@@ -54,6 +54,9 @@ A Linux feature that isolates the **hostname** and domain name system (DNS) **do
 IPC resources include message queues, semaphores, shared memory segments, etc.  
 
 To create a new IPC namespace: `unshare --ipc`
+
+## Process namespace
+
 
 
 
