@@ -2,11 +2,11 @@
 
 ## Resources
 
-- https://www.youtube.com/watch?v=yznoyQlA8gM
+- https://www.youtube.com/watch?v=yznoyQlA8gM (2023)
 
 ---
 
-# Namespaces
+# Linux Namespaces
 
 Introduced in Linux kernel version 2.6.24 in **2008**, namespaces define the set of resources that a process can use and interact with.  
 They partition kernel resources, allowing one specific set of processes to see one specific set of resources.   
@@ -22,9 +22,10 @@ As of 2023, there are 8 namespaces use by Linux, each isolating different aspect
 - **MNT** namespace: Isolates filesystem mount points
 - **USER** namespace: Isolates user and group IDs
 - **CGROUP** namespace: Isolates the virtual cgroup filesystem
-- **TIME**: ???
+- **TIME**: Isolates boot and monotonic clocks, allowing for different system times within namespaces
 
-Of the 8 existing namespaces, 6 are currently used by Docker.
+By default, Docker uses all of them except for the User and the Time namespaces.  
+As of now (2023), Docker can use the User namespace, but does not support the use of Time namespaces for containers.
 
 ## Important System Calls
 
@@ -37,9 +38,10 @@ Of the 8 existing namespaces, 6 are currently used by Docker.
 
 These system calls are fundamental for creating and managing namespaces, which are essential for containerization, process isolation, and resource management in modern Linux systems.
 
-## UTS namespace
+## The UTS namespace
 
-A Linux feature that isolates the **hostname** and domain name system (DNS) **domain** of a process from the host system.  
+A Linux feature that isolates the **hostname** and **domain name** of a process from the host system.  
+UTS stands for **Unix Time-Sharing**.
 
 - Let's create a new UTS namespace from the CLI: `unshare --uts`
 - then, let's change the hostname to `demo` in the same terminal window via `hostname demo`
@@ -80,4 +82,3 @@ To create a Process namespace: ``
 
 
 
-@15/48
