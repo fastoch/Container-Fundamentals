@@ -51,14 +51,29 @@ A Linux feature that isolates the **hostname** and domain name system (DNS) **do
 ## IPC namespace
 
 **Inter-Process Communication** namespace is a Linux feature that isolates the IPC resources of a process from the host system.  
-IPC resources include message queues, semaphores, shared memory segments, etc.  
 
-To create a new IPC namespace: `unshare --ipc`
+To create a new IPC namespace: `unshare --ipc`  
+Tools like `unshare` can be used to create new IPC namespaces, while `ipcmk` can create IPC resources within a namespace.  
+
+The main purpose of IPC namespaces is to **isolate IPC mechanisms** such as System V IPC objects and POSIX message queues.  
+- Each IPC namespace has its own set of System V IPC identifiers and POSIX message queue filesystem
+- IPC objects created within a namespace are only visible to processes that are members of the same namespace
+- When an IPC namespace is destroyed (when the last process in the namespace terminates), all IPC objects in that namespace are automatically destroyed
+
+System V IPC objects include:
+- Message queues
+- Semaphores
+- Shared memory segments
+
+IPC namespaces provide a powerful way to isolate and manage inter-process communication resources in Linux, contributing to better resource management and security in containerized environments.
 
 ## Process namespace
 
+Provides an isolated process tree for each namespace, allowing isolation of processes inside a container.  
+A container cannot see the processes of another container, and cannot see the processes of the host machine.  
+
+To create a Process namespace: ``
 
 
 
-
-@12/48
+@13/48
