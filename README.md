@@ -1,7 +1,8 @@
-# Container-internals
+# Container Fundamentals
 
-"Understanding Container Internals" by Joshua Jebaraj.  
-https://www.youtube.com/watch?v=9ivFrXgB2Zg  
+## Resources
+
+- https://www.youtube.com/watch?v=yznoyQlA8gM
 
 ---
 
@@ -13,7 +14,7 @@ They partition kernel resources, allowing one specific set of processes to see o
 Linux namespaces are a crucial feature for process isolation and resource management.  
 They allow the creation of **separate environments within a single Linux system**, each with its own view of system resources.  
 
-There are 7 types of namespaces in Linux, each isolating different aspects of the system:
+As of 2023, there are 8 namespaces use by Linux, each isolating different aspects of the system:
 - **UTS** namespace: Isolates hostname and domain name
 - **IPC** namespace: Isolates interprocess communication resources
 - **PID** namespace: Isolates process IDs
@@ -21,6 +22,9 @@ There are 7 types of namespaces in Linux, each isolating different aspects of th
 - **MNT** namespace: Isolates filesystem mount points
 - **USER** namespace: Isolates user and group IDs
 - **CGROUP** namespace: Isolates the virtual cgroup filesystem
+- **TIME**: ???
+
+Of the 8 existing namespaces, 6 are currently used by Docker.
 
 ## Important System Calls
 
@@ -67,7 +71,7 @@ System V IPC objects include:
 
 IPC namespaces provide a powerful way to isolate and manage inter-process communication resources in Linux, contributing to better resource management and security in containerized environments.
 
-## Process namespace
+## The PID (or Process) namespace
 
 Provides an isolated process tree for each namespace, allowing isolation of processes inside a container.  
 A container cannot see the processes of another container, and cannot see the processes of the host machine.  
@@ -76,4 +80,4 @@ To create a Process namespace: ``
 
 
 
-@13/48
+@15/48
