@@ -2,7 +2,7 @@
 
 ## Resources
 
-- https://www.youtube.com/watch?v=yznoyQlA8gM (2023)
+- The PID Namespace - https://www.youtube.com/watch?v=yznoyQlA8gM (2023)
 
 ---
 
@@ -25,7 +25,7 @@ As of 2023, there are 8 namespaces use by Linux, each isolating different aspect
 - **TIME**: Isolates boot and monotonic clocks, allowing for different system times within namespaces
 
 By default, Docker uses all of them except for the User and the Time namespaces.  
-As of now (2023), Docker can use the User namespace, but does not support the use of Time namespaces for containers.
+As of now (2023), Docker can use the User namespace, but does not support the use of Time namespace for containers.
 
 ## Important System Calls
 
@@ -78,7 +78,29 @@ IPC namespaces provide a powerful way to isolate and manage inter-process commun
 Provides an isolated process tree for each namespace, allowing isolation of processes inside a container.  
 A container cannot see the processes of another container, and cannot see the processes of the host machine.  
 
-To create a Process namespace: ``
+Let's run a container named 'demo' that uses the busybox image, and let's execute the top command inside of it:
+```bash
+docker run --name demo -d busybox top
+```
+
+Now, let's get the PID of that container:  
+`docker inspect -f '{{.State.Pid}}'`
+- `-f` is the **format** option, which specifies a Go template to extract specific information from the inspect output
+  - Docker is written in Go
+- The template `{{.State.Pid}}` instructs Docker to return only the PID value from the State section of the inspect output
+
+---
+
+### A note about the busybox image
+
+The BusyBox Docker image is a lightweight and versatile container image that **combines multiple UNIX utilities** into a single executable binary.  
+It's often referred to as the "**Swiss Army Knife of Embedded Linux**" due to its compact size and functionality.  
+
+BusyBox images are incredibly small, with most tags being under 900KB, making them even **smaller than Alpine images**.  
+BusyBox contains nearly **400 common UNIX commands**, replacing many GNU utilities with comparable functionality.  
+
+---
+
 
 
 
