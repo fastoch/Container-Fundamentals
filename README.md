@@ -73,25 +73,31 @@ System V IPC objects include:
 
 IPC namespaces provide a powerful way to isolate and manage inter-process communication resources in Linux, contributing to better resource management and security in containerized environments.
 
-## The PID (or Process) namespace
+## The PID (Process ID) namespace
 
 Provides an isolated process tree for each namespace, allowing isolation of processes inside a container.  
 A container cannot see the processes of another container, and cannot see the processes of the host machine.  
 
-Let's run a container named 'demo' that uses the busybox image, and let's execute the top command inside of it:
+### Inside and outside a container
+
+Let's run a container named 'demo' that uses the busybox image, and executes the top command:
 ```bash
 docker run --name demo -d busybox top
 ```
 
 Now, let's get the PID of that container:  
-`docker inspect -f '{{.State.Pid}}'`
-- `-f` is the **format** option, which specifies a Go template to extract specific information from the inspect output
-  - Docker is written in Go
-- The template `{{.State.Pid}}` instructs Docker to return only the PID value from the State section of the inspect output
+`docker inspect demo | grep Pid`
+
+To view processes inside a specific container: `docker top <container_id_or_name>`  
+In our example: `docker top demo`
+
+To know how the process looks like from inside the process namespace, we'll use the `nsenter` command.  
+This command is very useful for running commands inside namespaces.
+- `sudo nsenter --target <PID>`
 
 ---
 
-### A note about the busybox image
+**A note about the busybox image**  
 
 The BusyBox Docker image is a lightweight and versatile container image that **combines multiple UNIX utilities** into a single executable binary.  
 It's often referred to as the "**Swiss Army Knife of Embedded Linux**" due to its compact size and functionality.  
